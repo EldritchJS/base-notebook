@@ -17,6 +17,8 @@ ENV NB_USER=nbuser
 ENV NB_UID=1011
 ENV NB_PYTHON_VER=2.7
 
+COPY requirements.txt /tmp/
+
 # Python binary and source dependencies
 RUN yum install -y curl wget java-headless bzip2 gnupg2 sqlite3 \
     && yum clean all -y \
@@ -39,6 +41,7 @@ RUN yum install -y curl wget java-headless bzip2 gnupg2 sqlite3 \
 			    notebook \
 			    jupyter \
     && pip install widgetsnbextension \
+    && pip install -r /tmp/requirements.txt \
     && yum erase -y gcc gcc-c++ glibc-devel \
     && yum clean all -y \
     && rm -rf /root/.npm \
